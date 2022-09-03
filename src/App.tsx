@@ -1,24 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import Container from "./components/Container";
+import Header from "./components/Header";
+import TodoInput from "./components/TodoInput";
+import TodoList from "./components/TodoList";
+
+import { Todo } from "./models/todo.model";
 
 function App() {
+  const [todo, setTodo] = useState<Todo[]>([
+    { id: "123", text: "hello world" },
+  ]);
+  function addTodo(text: string): void {
+    setTodo((state) => [...state, { id: Math.random().toString(), text }]);
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Container>
+        <Header />
+      </Container>
+      <Container>
+        <TodoInput addTodo={addTodo} />
+      </Container>
+      <Container>
+        <TodoList todo={todo} />
+      </Container>
     </div>
   );
 }
